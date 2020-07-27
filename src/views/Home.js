@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {PropTypes} from 'prop-types';
-import Hero from '../containers/Hero';
-import { selectRoot } from "react-formio";
+import { PropTypes } from 'prop-types';
+import {selectRoot, Form} from "react-formio";
 
 const Home = class extends Component {
   static propTypes = {
@@ -13,7 +12,6 @@ const Home = class extends Component {
     const {auth} = this.props;
     return (
       <div>
-        <Hero />
         <div className="container">
           { auth.authenticated ? (
             <div className="well text-center">
@@ -29,6 +27,8 @@ const Home = class extends Component {
             </div>) :
             null
           }
+
+          <Form src="https://anmiixnpyklnqax.form.io/demographics"/>
         </div>
       </div>
     );

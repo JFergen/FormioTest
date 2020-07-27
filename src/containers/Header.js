@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { connect } from 'react-redux';
+import { Button, Alert } from 'react-bootstrap';
 import {PropTypes} from 'prop-types';
 import {Link} from 'react-router-dom';
 import {push} from "connected-react-router";
 import NavLink from './NavLink';
 import { selectRoot, logout } from "react-formio";
 import {AuthConfig} from "../config";
+import logo from "../assets/header/PepsiCo_Logo.png";
 
 const Header = class extends Component {
   static propTypes = {
@@ -13,33 +15,44 @@ const Header = class extends Component {
     logout: PropTypes.func.isRequired
   };
 
+  // TODO:: Need to figure out Redux with Brady for view
+  changeView = () => {
+    const [show, setShow] = useState(true);
+    
+    if (show) {
+      return (
+        <Alert 
+          variant='success'
+          dismissible
+          onClose={() => setShow(false)}
+        >
+          View was changed to REDUX THING
+        </Alert>
+      )
+    }
+    
+  }
+
   render() {
     const {auth, logout} = this.props;
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-          <Link className="navbar-brand" to="/">
-            <img className="logo" alt="Form.io" src="https://portal.form.io/images/formio-logo.png" height="25px" />
+      <nav className="navbar navbar-dark bg-dark">
+        <div className="container-fluid">
+          <Link to="/">
+            <img className="navbar-brand" alt="PepsiCo" src={logo} height="100px" />
           </Link>
-          <ul className="nav navbar-nav mr-auto">
-            <NavLink exact to="/" role="navigation button" className="nav-link">
-              <span className="fa fa-home" />
-            </NavLink>
-            { (auth.is.hasOwnProperty('administrator') && auth.is.administrator) ? (
-              <NavLink to="/form" role="navigation link" className="nav-link">
-                <i className="fa fa-wpforms"></i>&nbsp;
-                Forms
-              </NavLink>
-            ) : null }
-            { auth.authenticated ? (
-              <NavLink to="/event" role="navigation link" className="nav-link">
-                <i className="fa fa-calendar"></i>&nbsp;
-                Events
-              </NavLink>
-            ) : null }
-          </ul>
-          <ul className="nav navbar-nav ml-auto">
+
+          <b className="navbar-brand" style={{fontSize: 45}}>WSP Experience Dashboard</b>
+        
+          
+          <ul className="nav navbar-nav">
+          <Button 
+            variant="info"
+            onClick={this.changeView}
+          >
+            View: redux thing
+          </Button>
             { auth.authenticated ? (
               <li className="nav-item">
                 <span className="nav-link" role="navigation link" onClick={logout}>
@@ -49,7 +62,7 @@ const Header = class extends Component {
               </li>
             ) : (
               <NavLink to="/auth" role="navigation link" className="nav-link">
-                Login | Register
+                Login
               </NavLink>
             )}
           </ul>

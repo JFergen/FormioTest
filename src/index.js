@@ -22,7 +22,7 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
-        <App />
+        <App/>
       </div>
     </ConnectedRouter>
   </Provider>,
